@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Lung">
+<meta name="dcterms.date" content="2024-10-06">
 
 <title>Lab 2: Exploring Rodents with ggplot2</title>
 <style>
@@ -3131,7 +3132,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
+      <p class="date">October 6, 2024</p>
     </div>
   </div>
   
@@ -3173,7 +3174,9 @@ window.Quarto = {
 <section id="setup" class="level1">
 <h1>Setup</h1>
 <p>In the code chunk below, load in the packages necessary for your analysis. You should only need the <code>tidyverse</code> package for this analysis.</p>
-<pre class="{r}"><code>#| label: setup
+<pre class="{r}"><code>
+#| label: setup
+suppressMessages(library(tidyverse))
 </code></pre>
 </section>
 <section id="data-context" class="level1">
@@ -3247,6 +3250,10 @@ window.Quarto = {
 <h1>Reading the Data into <code>R</code></h1>
 <p><strong>1. Using the <code>read_csv()</code> function, write the code necessary to load in the <code>surveys.csv</code> dataset (stored in the data folder). For simplicity, name the data <code>surveys</code>.</strong></p>
 <pre class="{r}"><code>#| label: load-data
+surveydata &lt;- read_csv(&quot;/Users/alexl/Documents/STAT 331/Week 2/Lab 2/lab-2-MedMuf/data/surveys.csv&quot;)
+nrow(surveydata)
+ncol(surveydata)
+
 </code></pre>
 <p><strong>2. What are the dimensions (# of rows and columns) of these data?</strong></p>
 <!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  -->
@@ -3804,228 +3811,239 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Lab 2: Exploring Rodents with `ggplot2`&quot;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &quot;Alex Lung&quot;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;r Sys.Date()&quot; </span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> source</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="an">markdown:</span><span class="co"> </span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">  wrap: 72</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="an">embed-resources:</span><span class="co"> true</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="an">code-tools:</span><span class="co"> true</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 1: GitHub Workflow</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>Now that you have the Lab 2 repository cloned, you need to make sure these files are being tracked for **your** repository. To do this you need to:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;10/6/2024&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    embed-resources: true</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> source</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="an">markdown:</span><span class="co"> </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">  wrap: 72</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: true</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">  error: true</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="an">code-tools:</span><span class="co"> true</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="an">code-fold:</span><span class="co"> true</span></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Click the &quot;Git&quot; tab in upper right pane</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Check the &quot;Staged&quot; box for every file listed</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Click &quot;Commit&quot;</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In the box that opens, type a message in &quot;Commit message&quot;, such as &quot;Initialize lab 1&quot;.</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Click &quot;Commit&quot;.</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Click the green &quot;Push&quot; button to send your local changes to GitHub.</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>Now you are ready to go! Remember, as you are going through the lab I would strongly recommend rendering your HTML and committing your after **every** question!</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Seeking Help</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>Part of learning to program is learning from a variety of resources. Thus, I expect you will use resources that you find on the internet. There is, however, an important balance between copying someone else&#39;s code and *using their code to learn*. Therefore, if you use external resources, I want to know about it.</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 1: GitHub Workflow</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>Now that you have the Lab 2 repository cloned, you need to make sure these files are being tracked for **your** repository. To do this you need to:</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Click the &quot;Git&quot; tab in upper right pane</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Check the &quot;Staged&quot; box for every file listed</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Click &quot;Commit&quot;</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In the box that opens, type a message in &quot;Commit message&quot;, such as &quot;Initialize lab 1&quot;.</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Click &quot;Commit&quot;.</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Click the green &quot;Push&quot; button to send your local changes to GitHub.</span>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>If you used Google, you are expected to &quot;inform&quot; me of any resources you used by **pasting the link to the resource in a code comment next to where you used that resource**.</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>Now you are ready to go! Remember, as you are going through the lab I would strongly recommend rendering your HTML and committing your after **every** question!</span>
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>If you used ChatGPT, you are expected to &quot;inform&quot; me of the assistance you received by (1) indicating somewhere in the problem that you used ChatGPT (e.g., below the question prompt or as a code comment), and (2) paste the link to your chat (using the Share button from ChatGPT).</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Seeking Help</span></span>
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>Additionally, you are permitted and encouraged to work with your peers as you complete lab assignments, but **you are expected to do your own work**. Copying from each other is cheating, and letting people copy from you is also cheating. Please don&#39;t do either of those things.</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>Part of learning to program is learning from a variety of resources. Thus, I expect you will use resources that you find on the internet. There is, however, an important balance between copying someone else&#39;s code and *using their code to learn*. Therefore, if you use external resources, I want to know about it.</span>
 <span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="fu"># Lab Instructions</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>If you used Google, you are expected to &quot;inform&quot; me of any resources you used by **pasting the link to the resource in a code comment next to where you used that resource**.</span>
 <span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>The questions in this lab are noted with numbers and boldface. Each question will require you to produce code, whether it is one line or multiple lines.</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>If you used ChatGPT, you are expected to &quot;inform&quot; me of the assistance you received by (1) indicating somewhere in the problem that you used ChatGPT (e.g., below the question prompt or as a code comment), and (2) paste the link to your chat (using the Share button from ChatGPT).</span>
 <span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>This document is quite plain, meaning it does not have any special formatting. As part of your demonstration of creating professional looking Quarto documents, I would encourage you to spice your documents up (e.g., declaring execution options, specifying how your figures should be output, formatting your code output, etc.).</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>Additionally, you are permitted and encouraged to work with your peers as you complete lab assignments, but **you are expected to do your own work**. Copying from each other is cheating, and letting people copy from you is also cheating. Please don&#39;t do either of those things.</span>
 <span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setup</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="fu"># Lab Instructions</span></span>
 <span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>In the code chunk below, load in the packages necessary for your analysis. You should only need the <span class="in">`tidyverse`</span> package for this analysis.</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>The questions in this lab are noted with numbers and boldface. Each question will require you to produce code, whether it is one line or multiple lines.</span>
 <span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Context</span></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>The Portal Project is a long-term ecological study being conducted near Portal, AZ. Since 1977, the site has been used to study the interactions among rodents, ants, and plants, as well as their respective responses to climate. To study the interactions among organisms, researchers experimentally manipulated access to 24 study plots. This study has produced over 100 scientific papers and is one of the longest running ecological studies in the U.S.</span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>We will be investigating the animal species diversity and weights found within plots at the Portal study site. The data are stored as a comma separated value (CSV) file. Each row holds information for a single animal, and the columns represent:</span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>| Column            | Description                        |</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>|-------------------|------------------------------------|</span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>| <span class="in">`record_id`</span>       | Unique ID for the observation      |</span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>| <span class="in">`month`</span>           | month of observation               |</span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>| <span class="in">`day`</span>             | day of observation                 |</span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>| <span class="in">`year`</span>            | year of observation                |</span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>| <span class="in">`plot_id`</span>         | ID of a particular plot            |</span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>| <span class="in">`species_id`</span>      | 2-letter code                      |</span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>| <span class="in">`sex`</span>             | sex of animal (&quot;M&quot;, &quot;F&quot;)           |</span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>| <span class="in">`hindfoot_length`</span> | length of the hindfoot in mm       |</span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>| <span class="in">`weight`</span>          | weight of the animal in grams      |</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>| <span class="in">`genus`</span>           | genus of animal                    |</span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>| <span class="in">`species`</span>         | species of animal                  |</span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>| <span class="in">`taxon`</span>           | e.g. Rodent, Reptile, Bird, Rabbit |</span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>| <span class="in">`plot_type`</span>       | type of plot                       |</span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reading the Data into `R`</span></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>**1. Using the `read_csv()` function, write the code necessary to load in the `surveys.csv` dataset (stored in the data folder). For simplicity, name the data `surveys`.**</span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-data</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>This document is quite plain, meaning it does not have any special formatting. As part of your demonstration of creating professional looking Quarto documents, I would encourage you to spice your documents up (e.g., declaring execution options, specifying how your figures should be output, formatting your code output, etc.).</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setup</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>In the code chunk below, load in the packages necessary for your analysis. You should only need the <span class="in">`tidyverse`</span> package for this analysis.</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Context</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>The Portal Project is a long-term ecological study being conducted near Portal, AZ. Since 1977, the site has been used to study the interactions among rodents, ants, and plants, as well as their respective responses to climate. To study the interactions among organisms, researchers experimentally manipulated access to 24 study plots. This study has produced over 100 scientific papers and is one of the longest running ecological studies in the U.S.</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>We will be investigating the animal species diversity and weights found within plots at the Portal study site. The data are stored as a comma separated value (CSV) file. Each row holds information for a single animal, and the columns represent:</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>| Column            | Description                        |</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>|-------------------|------------------------------------|</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>| <span class="in">`record_id`</span>       | Unique ID for the observation      |</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>| <span class="in">`month`</span>           | month of observation               |</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>| <span class="in">`day`</span>             | day of observation                 |</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>| <span class="in">`year`</span>            | year of observation                |</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>| <span class="in">`plot_id`</span>         | ID of a particular plot            |</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>| <span class="in">`species_id`</span>      | 2-letter code                      |</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>| <span class="in">`sex`</span>             | sex of animal (&quot;M&quot;, &quot;F&quot;)           |</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>| <span class="in">`hindfoot_length`</span> | length of the hindfoot in mm       |</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>| <span class="in">`weight`</span>          | weight of the animal in grams      |</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>| <span class="in">`genus`</span>           | genus of animal                    |</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>| <span class="in">`species`</span>         | species of animal                  |</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>| <span class="in">`taxon`</span>           | e.g. Rodent, Reptile, Bird, Rabbit |</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>| <span class="in">`plot_type`</span>       | type of plot                       |</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reading the Data into `R`</span></span>
 <span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>**1. Using the `read_csv()` function, write the code necessary to load in the `surveys.csv` dataset (stored in the data folder). For simplicity, name the data `surveys`.**</span>
 <span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>**2. What are the dimensions (# of rows and columns) of these data?**</span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  --&gt;</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>**3. What are the data types of the variables in this dataset?**</span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  --&gt;</span></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-data</span></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>surveydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;/Users/alexl/Documents/STAT 331/Week 2/Lab 2/lab-2-MedMuf/data/surveys.csv&quot;</span>)</span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(surveydata)</span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(surveydata)</span>
 <span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exploratory Data Analysis with **`ggplot2`**</span></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a><span class="in">`ggplot()`</span> graphics are built step by step by adding new elements. Adding layers in this fashion allows for extensive flexibility and customization of plots.</span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>To build a <span class="in">`ggplot()`</span>, we will use the following basic template that can be used for different types of plots:</span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: ggplot-template-code</span></span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>,</span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="sc">&lt;</span>VARIABLE MAPPINGS<span class="sc">&gt;</span>)) <span class="sc">+</span></span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>  <span class="er">&lt;</span>GEOM_FUNCTION<span class="sc">&gt;</span>()</span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>**2. What are the dimensions (# of rows and columns) of these data?**</span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  --&gt;</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>**3. What are the data types of the variables in this dataset?**</span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  --&gt;</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exploratory Data Analysis with **`ggplot2`**</span></span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="in">`ggplot()`</span> graphics are built step by step by adding new elements. Adding layers in this fashion allows for extensive flexibility and customization of plots.</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>To build a <span class="in">`ggplot()`</span>, we will use the following basic template that can be used for different types of plots:</span>
 <span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>Let&#39;s get started!</span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scatterplot</span></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>**4. First, let&#39;s create a scatterplot of the relationship between `weight` (on the** $x$-axis) and <span class="in">`hindfoot_length`</span> (on the $y$-axis).</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: ggplot-template-code</span></span>
 <span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: scatterplot</span></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="sc">&lt;</span>DATA<span class="sc">&gt;</span>,</span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="sc">&lt;</span>VARIABLE MAPPINGS<span class="sc">&gt;</span>)) <span class="sc">+</span></span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>  <span class="er">&lt;</span>GEOM_FUNCTION<span class="sc">&gt;</span>()</span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>Let&#39;s get started!</span>
 <span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>We can see there are **a lot** of points plotted on top of each other. Let&#39;s try and modify this plot to extract more information from it.</span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scatterplot</span></span>
 <span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>**5. Let&#39;s add transparency (`alpha`) to the points, to make the points more transparent and (possibly) easier to see.**</span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>**4. First, let&#39;s create a scatterplot of the relationship between `weight` (on the** $x$-axis) and <span class="in">`hindfoot_length`</span> (on the $y$-axis).</span>
 <span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Add code to the scatterplot you created for question 4! --&gt;</span></span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>Despite our best efforts there is still a substantial amount of overplotting occurring in our scatterplot. Let&#39;s try splitting the dataset into smaller subsets and see if that allows for us to see the trends a bit better.</span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>**6. Facet your scatterplot by `species`.**</span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Add code to the scatterplot you created for question 4 (and modified for question 5)! --&gt;</span></span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>**7. No plot is complete without axis labels and a title. Include reader friendly labels and a title to your plot.**</span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you originally created for question 4! --&gt;</span></span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>It takes a larger cognitive load to read text that is rotated. It is common practice in many journals and media outlets to move the $y$-axis label to the top of the graph under the title.</span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>**8. Specify your** $y$-axis label to be empty and move the $y$-axis label into the subtitle.</span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you originally created for question 4! --&gt;</span></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Boxplots</span></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: boxplot</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: scatterplot</span></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>We can see there are **a lot** of points plotted on top of each other. Let&#39;s try and modify this plot to extract more information from it.</span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>**5. Let&#39;s add transparency (`alpha`) to the points, to make the points more transparent and (possibly) easier to see.**</span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Add code to the scatterplot you created for question 4! --&gt;</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>Despite our best efforts there is still a substantial amount of overplotting occurring in our scatterplot. Let&#39;s try splitting the dataset into smaller subsets and see if that allows for us to see the trends a bit better.</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>**6. Facet your scatterplot by `species`.**</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Add code to the scatterplot you created for question 4 (and modified for question 5)! --&gt;</span></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>**7. No plot is complete without axis labels and a title. Include reader friendly labels and a title to your plot.**</span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you originally created for question 4! --&gt;</span></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>It takes a larger cognitive load to read text that is rotated. It is common practice in many journals and media outlets to move the $y$-axis label to the top of the graph under the title.</span>
 <span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>**10. Create side-by-side boxplots to visualize the distribution of weight within each species.**</span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>A fundamental complaint of boxplots is that they do not plot the raw data. However, with **ggplot** we can add the raw points on top of the boxplots!</span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a>**11. Add another layer to your previous plot that plots each observation.**</span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Modify the plot you made for question 10! --&gt;</span></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>**8. Specify your** $y$-axis label to be empty and move the $y$-axis label into the subtitle.</span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you originally created for question 4! --&gt;</span></span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Boxplots</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: boxplot</span></span>
 <span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>Alright, this should look less than optimal. Your points should appear rather stacked on top of each other. To make them less stacked, we need to jitter them a bit, using <span class="in">`geom_jitter()`</span>.</span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>**12. Remove the previous layer and include a `geom_jitter()` layer instead.**</span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you made for question 10! --&gt;</span></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>That should look a bit better! But its really hard to see the points when everything is black.</span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>**13. Set the `color` aesthetic in `geom_jitter()` to change the color of the points and add set the `alpha` aesthetic to add transparency.** You are welcome to use whatever color you wish! Some of my favorites are &quot;orange3&quot; and &quot;steelblue&quot;.</span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you made for question 10! --&gt;</span></span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a>Great! Now that you can see the points, you should notice something odd: there are two colors of points still being plotted. Some of the observations are being plotted twice, once from <span class="in">`geom_boxplot()`</span> as outliers and again from <span class="in">`geom_jitter()`</span>!</span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a>**14. Inspect the help file for `geom_boxplot()` and see how you can remove the outliers from being plotted by `geom_boxplot()`. Make this change in your code!**</span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you made for question 10! --&gt;</span></span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a>Some small changes can make **big** differences to plots. One of these changes are better labels for a plot&#39;s axes and legend.</span>
-<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a>**15. Modify the** $x$-axis and $y$-axis labels to describe what is being plotted. Be sure to include any necessary units! You might also be getting overlap in the species names -- use <span class="in">`theme(axis.text.x = ____)`</span> or <span class="in">`theme(axis.text.y = ____)`</span> to turn the species axis labels 45 degrees.</span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you made for question 10! --&gt;</span></span>
-<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>Some people (and journals) prefer for boxplots to be stacked with a specific orientation! Let&#39;s practice changing the orientation of our boxplots.</span>
-<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>**16. Now copy-paste your boxplot code you&#39;ve been adding to above. Flip the orientation of your boxplots. If you created horizontally stacked boxplots, your boxplots should now be stacked vertically. If you had vertically stacked boxplots, you should now stack your boxplots horizontally!**</span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rotated-boxplot</span></span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>**10. Create side-by-side boxplots to visualize the distribution of weight within each species.**</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>A fundamental complaint of boxplots is that they do not plot the raw data. However, with **ggplot** we can add the raw points on top of the boxplots!</span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>**11. Add another layer to your previous plot that plots each observation.**</span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Modify the plot you made for question 10! --&gt;</span></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>Alright, this should look less than optimal. Your points should appear rather stacked on top of each other. To make them less stacked, we need to jitter them a bit, using <span class="in">`geom_jitter()`</span>.</span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>**12. Remove the previous layer and include a `geom_jitter()` layer instead.**</span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you made for question 10! --&gt;</span></span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>That should look a bit better! But its really hard to see the points when everything is black.</span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>**13. Set the `color` aesthetic in `geom_jitter()` to change the color of the points and add set the `alpha` aesthetic to add transparency.** You are welcome to use whatever color you wish! Some of my favorites are &quot;orange3&quot; and &quot;steelblue&quot;.</span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you made for question 10! --&gt;</span></span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a>Great! Now that you can see the points, you should notice something odd: there are two colors of points still being plotted. Some of the observations are being plotted twice, once from <span class="in">`geom_boxplot()`</span> as outliers and again from <span class="in">`geom_jitter()`</span>!</span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>**14. Inspect the help file for `geom_boxplot()` and see how you can remove the outliers from being plotted by `geom_boxplot()`. Make this change in your code!**</span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you made for question 10! --&gt;</span></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>Some small changes can make **big** differences to plots. One of these changes are better labels for a plot&#39;s axes and legend.</span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a>**15. Modify the** $x$-axis and $y$-axis labels to describe what is being plotted. Be sure to include any necessary units! You might also be getting overlap in the species names -- use <span class="in">`theme(axis.text.x = ____)`</span> or <span class="in">`theme(axis.text.y = ____)`</span> to turn the species axis labels 45 degrees.</span>
 <span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Continue to modify the plot you made for question 10! --&gt;</span></span>
 <span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>Notice how vertically stacked boxplots make the species labels more readable than horizontally stacked boxplots (even when the axis labels are rotated). This is good practice!</span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>Some people (and journals) prefer for boxplots to be stacked with a specific orientation! Let&#39;s practice changing the orientation of our boxplots.</span>
 <span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conducting Statistical Analyses</span></span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a>**16. Now copy-paste your boxplot code you&#39;ve been adding to above. Flip the orientation of your boxplots. If you created horizontally stacked boxplots, your boxplots should now be stacked vertically. If you had vertically stacked boxplots, you should now stack your boxplots horizontally!**</span>
 <span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>Exploratory Data Analysis (EDA) is always a great start to investigating a dataset. Can we see a relationship between rodent weight and hindfoot length? How does rodent weight differ between species? After performing EDA, we can then conduct appropriate statistical analyses to formally investigate what we have seen.</span>
-<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a>In this section, we are going to conduct a one-way analysis of variance (ANOVA) to compare mean weight between the fourteen different species of rodents. If you would like a refresher on ANOVA, here&#39;s a good chapter to read: https://openintro-ims.netlify.app/inference-many-means).</span>
-<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>With an ANOVA, we have two hypotheses:</span>
-<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a>$H_0$: The population mean weight is the same between **all** fourteen rodent species.</span>
-<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>$H_A$: **At least one** rodent species has a different population mean weight.</span>
-<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a>We&#39;re going to use the <span class="in">`aov()`</span> function to carry out an ANOVA.</span>
-<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a>**17. Using `aov()`, complete the code below to carry out the analysis.** You might want to look up the help documentation for <span class="in">`aov()`</span>.</span>
-<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: anova</span></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rotated-boxplot</span></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>Notice how vertically stacked boxplots make the species labels more readable than horizontally stacked boxplots (even when the axis labels are rotated). This is good practice!</span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conducting Statistical Analyses</span></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a>Exploratory Data Analysis (EDA) is always a great start to investigating a dataset. Can we see a relationship between rodent weight and hindfoot length? How does rodent weight differ between species? After performing EDA, we can then conduct appropriate statistical analyses to formally investigate what we have seen.</span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>In this section, we are going to conduct a one-way analysis of variance (ANOVA) to compare mean weight between the fourteen different species of rodents. If you would like a refresher on ANOVA, here&#39;s a good chapter to read: https://openintro-ims.netlify.app/inference-many-means).</span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a>With an ANOVA, we have two hypotheses:</span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a>$H_0$: The population mean weight is the same between **all** fourteen rodent species.</span>
 <span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>species_mod <span class="ot">&lt;-</span> <span class="fu">aov</span>()</span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>$H_A$: **At least one** rodent species has a different population mean weight.</span>
 <span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(species_mod)</span>
-<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a>**18. Based on the results of the ANOVA F-test, draw a conclusion in context of the hypotheses. Make sure to cite appropriate output from above.**</span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a><span class="fu"># Lab 2 Submission</span></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a>For Lab 2 you will submit **only** your HTML file. Your HTML file is required to have the following specifications in the YAML options (at the top of your document):</span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>We&#39;re going to use the <span class="in">`aov()`</span> function to carry out an ANOVA.</span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>**17. Using `aov()`, complete the code below to carry out the analysis.** You might want to look up the help documentation for <span class="in">`aov()`</span>.</span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: anova</span></span>
 <span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>have the plots embedded (<span class="in">`embed-resources: true`</span>)</span>
-<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>include your source code (<span class="in">`code-tools: true`</span>)</span>
-<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>include all your code and output (<span class="in">`echo: true`</span>)</span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a>**If any of the options are not included, your Lab 2 or Challenge 2 assignment will receive an &quot;Incomplete&quot; and you will be required to submit a revision.**</span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a>In addition, your document should not have any warnings or messages output in your HTML document. **If your HTML contains warnings or messages, you will receive an &quot;Incomplete&quot; for document formatting and you will be required to submit a revision.**</span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a>species_mod <span class="ot">&lt;-</span> <span class="fu">aov</span>()</span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(species_mod)</span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>**18. Based on the results of the ANOVA F-test, draw a conclusion in context of the hypotheses. Make sure to cite appropriate output from above.**</span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="fu"># Lab 2 Submission</span></span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>For Lab 2 you will submit **only** your HTML file. Your HTML file is required to have the following specifications in the YAML options (at the top of your document):</span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>have the plots embedded (<span class="in">`embed-resources: true`</span>)</span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>include your source code (<span class="in">`code-tools: true`</span>)</span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>include all your code and output (<span class="in">`echo: true`</span>)</span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>**If any of the options are not included, your Lab 2 or Challenge 2 assignment will receive an &quot;Incomplete&quot; and you will be required to submit a revision.**</span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>In addition, your document should not have any warnings or messages output in your HTML document. **If your HTML contains warnings or messages, you will receive an &quot;Incomplete&quot; for document formatting and you will be required to submit a revision.**</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

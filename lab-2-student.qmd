@@ -1,13 +1,19 @@
 ---
 title: "Lab 2: Exploring Rodents with `ggplot2`"
 author: "Alex Lung"
-date: "r Sys.Date()" 
-format: html
+date: "10/6/2024"
+format: 
+  html:
+    embed-resources: true
 editor: source
 markdown: 
   wrap: 72
-embed-resources: true
+execute: 
+  echo: true
+  error: true
 code-tools: true
+code-fold: true
+
 ---
 
 # Part 1: GitHub Workflow
@@ -44,7 +50,9 @@ This document is quite plain, meaning it does not have any special formatting. A
 In the code chunk below, load in the packages necessary for your analysis. You should only need the `tidyverse` package for this analysis.
 
 ```{r}
+
 #| label: setup
+suppressMessages(library(tidyverse))
 
 ```
 
@@ -76,6 +84,10 @@ We will be investigating the animal species diversity and weights found within p
 
 ```{r}
 #| label: load-data
+surveydata <- read_csv("/Users/alexl/Documents/STAT 331/Week 2/Lab 2/lab-2-MedMuf/data/surveys.csv")
+nrow(surveydata)
+ncol(surveydata)
+
 
 ```
 
